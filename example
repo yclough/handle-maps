@@ -11,7 +11,7 @@
 
 # import functions	
 	source('getmap2.R')
-	source('funct.plot.R')
+	source('plotmat.R')
 
 # selecting a set of (rectangular) sample landscapes - leftbottom and upperright coordinates stored in "sample.coord"
 
