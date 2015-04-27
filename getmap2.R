@@ -52,7 +52,6 @@ getmap2<-function(map_path=map_path,
 		for(i in 1:length(mat_orig_sample$E)){	
 		tempmat<-x[nrow(x):1,][x_size$N-((mat_orig_sample$N[i]+size_landsc):mat_orig_sample$N[i]),
 		(mat_orig_sample$E[i]:(mat_orig_sample$E[i]+size_landsc))]
-		#map.sample.curr[[i]]<-data.frame(r=as.vector(row(tempmat)),c=as.vector(col(tempmat)),v=as.vector(tempmat))
 		map.sample.curr[[i]]<-tempmat
 		}
 		return(list(info=list(origin_sample=origin_sample,size_landsc_m=size_landsc_m, cell.size=cell.size, year = year, map=map.curr,orientation="row: N to S; col: W to E"),matrices=map.sample.curr))
