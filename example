@@ -1,6 +1,9 @@
 # Example running getmap2 and translating the numbers in the matrices to something else
   # This uses 15 landscapes from Skaraborgs län Block SMD data
 
+# load libraries that are needed
+	require(fields)
+	require(plyr)
 
 # Define paths that will be used to access input files #
 	code_path <-"C:/a1workmain/ES_synthesis/BC_OSR/code/OSR_20150409"
@@ -46,7 +49,7 @@
 	tempy<-map_2009
 	setwd(map_path)
 	rastercode<-read.table("rastercode_20150416.txt",h=T)
-	library(plyr)
+
 	for(i in 1:15){
 	tempy[[2]][[i]]<-mapvalues(map_2009[[2]][[i]],rastercode[,'number'],rastercode[,'OSR_biocontrol_LU'], warn_missing = FALSE)
 	}
