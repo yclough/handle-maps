@@ -1,9 +1,14 @@
 # Example running getmap2 and translating the numbers in the matrices to something else
   # This uses 15 landscapes from Skaraborgs län Block SMD data
 
-library(devtools)
-SourceURL <- "https://github.com/yclough/handle-maps/getmap2.R"
-source_url(SourceURL)
+
+# Define paths that will be used to access input files #
+	code_path <-"C:/a1workmain/ES_synthesis/BC_OSR/code/OSR_20150409"
+	map_path <- paste(code_path, "/maps",sep="")
+
+# import functions	
+	source('getmap2.R')
+	source('funct.plot.R')
 
 # selecting a set of (rectangular) sample landscapes - leftbottom and upperright coordinates stored in "sample.coord"
 
@@ -27,7 +32,7 @@ source_url(SourceURL)
 	apply(sample.coord,1,rectv)
 
 
-# Capture all 15 landscapes from block-SMD data
+# Capture all 15 landscapes from block-SMD data fro 2009 and 2010
 
 	map_2009<-getmap2(map_path=map_path,origin_region=list(E=1302000,N=6410000),origin_sample=list(E= sample.coord[,1],N=sample.coord[,2]),
 		size_landsc_m=10000,	cell.size=25, year = 2009,prefix="cSMD_Ska",suffix="",filetype="mat")
@@ -36,3 +41,16 @@ source_url(SourceURL)
 		size_landsc_m=10000,	cell.size=25, year = 2010,prefix="cSMD_Ska",suffix="",filetype="mat")
 		
 		
+# converting between landuse codes
+
+	tempy<-map_2009
+	setwd(map_path)
+	rastercode<-read.table("rastercode_20150416.txt",h=T)
+	library(plyr)
+	for(i in 1:15){
+	tempy[[2]][[i]]<-mapvalues(map_2009[[2]][[i]],rastercode[,'number'],rastercode[,'OSR_biocontrol_LU'], warn_missing = FALSE)
+	}
+	# plot result
+	par(mfrow=c(1,2))
+	plotmat(tempy[[2]][[i]])
+	plotmat(map_2009[[2]][[i]])
